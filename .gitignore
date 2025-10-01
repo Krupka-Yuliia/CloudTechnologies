@@ -1,19 +1,41 @@
-# Terraform
+# .gitignore для Terraform
+# Terraform state files
 *.tfstate
-*.tfstate.backup
 *.tfstate.*
-crash.log
-.terraform.lock.hcl
+*.tfstate.backup
+
+# Terraform directories
 .terraform/
+.terraform.lock.hcl
+
+# Sensitive files
+terraform.tfvars
+*.tfvars
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-*.tfplan
-*.tfvars
-*.tfvars.json
 
-# IntelliJ
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files (містять sensitive дані)
+**/*.tfvars
+
+# CLI configuration files
+.terraformrc
+terraform.rc
+
+# Passwords and sensitive outputs
+password.txt
+*.secret
+*.key
+
+# IDE files
 .idea/
-*.iml
-out/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
