@@ -1,10 +1,10 @@
 variable "domain_name" {
-  description = "The domain name of your Azure AD tenant"
+  description = "The domain name of the Azure AD tenant"
   type        = string
 }
 
 variable "guest_email" {
-  description = "Email for inviting an external user (leave empty to skip)"
+  description = "Email for inviting an external user"
   type        = string
   default     = ""
 }

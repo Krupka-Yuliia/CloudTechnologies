@@ -10,12 +10,12 @@ output "user_principal_name" {
 
 output "group_id" {
   description = "Object ID of the group"
-  value       = azuread_group.it_lab_admins.object_id
+  value       = azuread_group.it_lab_administrators.object_id
 }
 
 output "group_name" {
   description = "Group name"
-  value       = azuread_group.it_lab_admins.display_name
+  value       = azuread_group.it_lab_administrators.display_name
 }
 
 output "guest_user_id" {

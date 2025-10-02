@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2.45.0"
+      version = "~> 3.0"
     }
   }
 }
@@ -37,7 +37,19 @@ resource "azuread_user" "az104_user1" {
   force_password_change = false
 }
 
-resource "azuread_group" "it_lab_admins" {
+resource "azuread_invitation" "guest_user" {
+  count = var.guest_email != "" ? 1 : 0
+
+  user_email_address = var.guest_email
+  user_display_name  = var.guest_name
+  redirect_url       = "https://portal.azure.com"
+
+  message {
+    body = "Welcome to Azure and our group project"
+  }
+}
+
+resource "azuread_group" "it_lab_administrators" {
   display_name     = "IT Lab Administrators"
   description      = "Administrators that manage the IT lab"
   security_enabled = true
@@ -51,22 +63,10 @@ resource "azuread_group" "it_lab_admins" {
   ]
 }
 
-resource "azuread_invitation" "guest_user" {
-  count = var.guest_email != "" ? 1 : 0
-
-  user_email_address = var.guest_email
-  user_display_name  = var.guest_name
-  redirect_url       = "https://portal.azure.com"
-
-  message {
-    body = "Welcome to Azure and our group project"
-  }
-}
-
 resource "azuread_group_member" "guest_member" {
   count = var.guest_email != "" ? 1 : 0
 
-  group_object_id  = azuread_group.it_lab_admins.object_id
+  group_object_id  = azuread_group.it_lab_administrators.object_id
   member_object_id = azuread_invitation.guest_user[0].user_id
 
   depends_on = [azuread_invitation.guest_user]
