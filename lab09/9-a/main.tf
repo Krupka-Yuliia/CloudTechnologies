@@ -39,12 +39,6 @@ resource "azurerm_linux_web_app" "webapp" {
     }
     always_on = true
   }
-
-  app_settings = {
-    "WEBSITE_RUN_FROM_PACKAGE" = "1"
-  }
-
-  https_only = true
 }
 
 resource "azurerm_linux_web_app_slot" "staging" {
@@ -58,18 +52,12 @@ resource "azurerm_linux_web_app_slot" "staging" {
     always_on = true
   }
 
-  app_settings = {
-    "WEBSITE_RUN_FROM_PACKAGE" = "1"
-  }
-
-  https_only = true
 }
 
 resource "azurerm_app_service_source_control_slot" "staging_source" {
-  slot_id  = azurerm_linux_web_app_slot.staging.id
-  repo_url = "https://github.com/Azure-Samples/php-docs-hello-world"
-  branch   = "master"
-
+  slot_id                = azurerm_linux_web_app_slot.staging.id
+  repo_url               = "https://github.com/Azure-Samples/php-docs-hello-world"
+  branch                 = "master"
   use_manual_integration = true
   use_mercurial          = false
 }
@@ -148,6 +136,5 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
         cooldown  = "PT5M"
       }
     }
-
   }
 }
